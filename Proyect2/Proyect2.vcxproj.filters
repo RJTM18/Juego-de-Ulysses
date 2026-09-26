@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Proyect2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Carro.h" />
+    <ClInclude Include="EnemigoEspecial.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Jugador.h" />
+    <ClInclude Include="MapaNivel1.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico" />
+  </ItemGroup>
+</Project>

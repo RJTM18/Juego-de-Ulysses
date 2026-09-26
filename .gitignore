@@ -1,0 +1,21 @@
+# Visual Studio
+.vs/
+Debug/
+Release/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.idb
+*.pch
+*.tlog
+*.lastbuildstate
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+ipch/
