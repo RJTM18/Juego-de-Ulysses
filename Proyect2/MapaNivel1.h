@@ -13,6 +13,8 @@ private:
     static const int INICIO_NOCTURNO = 340;
     static const int FIN_RECORRIDO = 500;
 
+    //hacer cambio
+
     char pista(int mundoX, int fila, char linea) const {
         if (fila == 4) return '=';
         if (fila == 5) return '-';

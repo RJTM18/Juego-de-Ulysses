@@ -17,7 +17,7 @@
 using namespace std;
 
 const int ANCHO_PANTALLA = 90;
-const int FILAS_FONDO = 6;
+const int FILAS_FONDO = 6; //cambiar esto
 const int FILAS_JUEGO = 12;
 const int ALTO_TOTAL = FILAS_FONDO + FILAS_JUEGO;
 
@@ -28,9 +28,9 @@ const int ZONA_CAMARA_X = 35;
 // ==========================================================
 // TEXTOS DE TRANSICION: ESCRIBE LO QUE QUIERAS ENTRE " "
 // ==========================================================
-const string TEXTO_FIN_MAPA_1 = "";
-const string TEXTO_FIN_MAPA_2 = "";
-const string TEXTO_FIN_MAPA_3 = "";
+const string TEXTO_FIN_MAPA_1 = "Bloom: Ese hombre vendra, Cierto?. Vendra a visitar a Molly. Sera mejor que camine";
+const string TEXTO_FIN_MAPA_2 = "Bloom: Que recuerde, en tal biblioteca, un chico llamado Stephen dara un ensayo acerca de las obras de Shakespeare";
+const string TEXTO_FIN_MAPA_3 = "Bloom: He escuchado que Sandymount Strand se encuentran mujeres bellas, podria echarlas un vistaso";
 
 void limpiarPantalla() {
 #ifdef _WIN32
@@ -49,7 +49,7 @@ void esperarX(const string& texto, Jugador& jugador, MapaNivel1& mapa) {
     cout << string(ANCHO_PANTALLA, '=') << "\n";
 
     for (int fila = 0; fila < ALTO_TOTAL; fila++) {
-        string linea(ANCHO_PANTALLA, ' ');
+        string linea(ANCHO_PANTALLA, 'XD');
 
         for (int x = 0; x < ANCHO_PANTALLA; x++)
             linea[x] = mapa.getPixelFondo(x, fila);
@@ -109,7 +109,8 @@ int main() {
         cout << "FLECHA DERECHA: avanzar (puedes mantenerla presionada).\n";
         cout << "Al llegar a la zona de camara, TU quedas en pantalla y el MUNDO se mueve.\n";
         cout << "Si dejas de avanzar, el mapa se queda quieto.\n\n";
-        cout << "Presiona cualquier tecla para comenzar...";
+        cout << "Presiona cualquier tecla para comenzar...\n\n";
+        cout << "Introduccion: En un dia como cualquier otro, 16 de junio de 1904 en la ciudad de dublin, Leopold Bloom, esposo de molly, sale de su casa en direccion al trabajo. Por este dia, decide tomar la ruta mas larga...";
         _getch();
 
         while (jugador.getVidas() > 0 && !nivelCompletado) {
@@ -266,8 +267,10 @@ int main() {
         limpiarPantalla();
         if (nivelCompletado) {
             cout << "\n=============================================\n";
-            cout << "          PERSECUCION COMPLETADA             \n";
-            cout << "=============================================\n";
+            cout << "                NIVEL COMPLETADO             \n";
+            cout << "=============================================\n\n\n";
+            cout << "Bloom llega a Nightown, el barrio rojo de Dublin, donde se encuentran con Stephen y pasan el rato. Despues de varios 'episodios', Stephen queda desorientado, por lo que Bloom debera guiarle el camino";
+                
         }
         else {
             cout << "\n=============================================\n";
