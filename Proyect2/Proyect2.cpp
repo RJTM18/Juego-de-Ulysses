@@ -81,9 +81,9 @@ int main() {
     while (true) {
         limpiarPantalla();
         cout << "=========================================\n";
-        cout << "              JUEGO RETRO                \n";
+        cout << "                 Ullyses                 \n";
         cout << "=========================================\n\n";
-        cout << "1. Jugar persecucion\n";
+        cout << "1. Iniciar Nuevo Juego\n";
         cout << "2. Salir\n\n";
         cout << "Elige una opcion: ";
         cin >> opcion;
@@ -266,7 +266,7 @@ int main() {
         limpiarPantalla();
         if (nivelCompletado) {
             cout << "\n=============================================\n";
-            cout << "          PERSECUCION COMPLETADA             \n";
+            cout << "               NIVEL I COMPLETADO              \n";
             cout << "=============================================\n";
         }
         else {
