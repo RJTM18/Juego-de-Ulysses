@@ -5,6 +5,8 @@
 
 using namespace std;
 
+//Hola soy Rafael
+
 class EnemigoEspecial {
 private:
     int x, y;
@@ -25,7 +27,7 @@ public:
 
     void avanzar() {
         if (!activo) {
-            // NUEVO: 16% de probabilidad de aparecer en cada ciclo (Extremadamente r·pido)
+            // NUEVO: 16% de probabilidad de aparecer en cada ciclo (Extremadamente r√°pido)
             if ((rand() % 6) == 0) {
                 activo = true;
                 x = anchoPantalla;
