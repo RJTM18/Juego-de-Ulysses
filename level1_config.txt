@@ -1,0 +1,4 @@
+ruta_archivo: C:\Users\Rafael Tito\Downloads\Fondo de ciudad Nivel 1.txt
+modalidad_camara:
+coordenadas_enemigos:
+texto_dialogos:

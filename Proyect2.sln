@@ -1,9 +1,46 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.37614.0 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12217.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Proyect2", "Proyect2\Proyect2.vcxproj", "{5166C32B-F5BB-666C-4DB6-5E0D7BDD608C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6A223AD3-872A-448B-9A98-1EC81EC72EEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6D7FCD1D-2A1A-43E5-8AD3-B71E20F2F311}"
+	ProjectSection(SolutionItems) = preProject
+		IGameState.h = IGameState.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{7E04C437-555E-4E1F-B1BC-F917E9FEEDC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backgrounds", "backgrounds", "{57FF6B1E-C711-42C3-8C19-1F924B1822EC}"
+	ProjectSection(SolutionItems) = preProject
+		Fondo de ciudad Nivel 1.txt = Fondo de ciudad Nivel 1.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{F1F48B49-8587-44CD-AC44-10773F8BCEFB}"
+	ProjectSection(SolutionItems) = preProject
+		level1_config.txt = level1_config.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "World", "World", "{7FFFC7C3-4528-4765-AF8B-E638C90382FB}"
+	ProjectSection(SolutionItems) = preProject
+		BackgroundMap.h = BackgroundMap.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{BA487B0E-7332-44AF-BCDD-21000A4AD71D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Levels", "Levels", "{27C0D8C9-D68D-4357-BAAC-E9F04604AAF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Camera", "Camera", "{C7879069-C53C-46B9-9BB1-F49B57E18F04}"
+	ProjectSection(SolutionItems) = preProject
+		CameraBehavior.h = CameraBehavior.h
+		ContinuousCameraStrategy.cpp = ContinuousCameraStrategy.cpp
+		ContinuousCameraStrategy.h = ContinuousCameraStrategy.h
+		OmniCameraStrategy.h = OmniCameraStrategy.h
+		SegmentedCameraStrategy.h = SegmentedCameraStrategy.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +61,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D7FCD1D-2A1A-43E5-8AD3-B71E20F2F311} = {6A223AD3-872A-448B-9A98-1EC81EC72EEB}
+		{57FF6B1E-C711-42C3-8C19-1F924B1822EC} = {7E04C437-555E-4E1F-B1BC-F917E9FEEDC1}
+		{F1F48B49-8587-44CD-AC44-10773F8BCEFB} = {7E04C437-555E-4E1F-B1BC-F917E9FEEDC1}
+		{7FFFC7C3-4528-4765-AF8B-E638C90382FB} = {6A223AD3-872A-448B-9A98-1EC81EC72EEB}
+		{BA487B0E-7332-44AF-BCDD-21000A4AD71D} = {6A223AD3-872A-448B-9A98-1EC81EC72EEB}
+		{27C0D8C9-D68D-4357-BAAC-E9F04604AAF4} = {6A223AD3-872A-448B-9A98-1EC81EC72EEB}
+		{C7879069-C53C-46B9-9BB1-F49B57E18F04} = {6A223AD3-872A-448B-9A98-1EC81EC72EEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B34BEF5F-6969-4E9C-B7FF-FBDB706BFB7B}

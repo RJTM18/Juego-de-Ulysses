@@ -20,4 +20,12 @@
   <ItemGroup>
     <Image Include="app.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{b61f2597-30be-44b3-be0e-ff19f4b8858f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src.cs" />
+  </ItemGroup>
 </Project>
