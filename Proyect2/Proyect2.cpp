@@ -5,15 +5,19 @@
 #include <cstdlib>
 #include <ctime>
 #include <chrono>
+#include <cctype>
 #ifdef _WIN32
 #include <Windows.h>
-#pragma comment(lib, "User32.lib")
 #endif
 #include "Jugador.h"
 #include "Carro.h"
 #include "EnemigoEspecial.h"
 #include "MapaNivel1.h"
 #include "GameManager.h"
+#include "PersonajeElegante.h"
+#include "ContinuousCameraStrategy.h"
+#include "MapaNivel2.h"
+#include "SegmentedCameraStrategy.h"
 using namespace std;
 
 const int ANCHO_PANTALLA = 90;
@@ -49,7 +53,7 @@ void esperarX(const string& texto, Jugador& jugador, MapaNivel1& mapa) {
     cout << string(ANCHO_PANTALLA, '=') << "\n";
 
     for (int fila = 0; fila < ALTO_TOTAL; fila++) {
-        string linea(ANCHO_PANTALLA, 'XD');
+        string linea(ANCHO_PANTALLA, ' ');
 
         for (int x = 0; x < ANCHO_PANTALLA; x++)
             linea[x] = mapa.getPixelFondo(x, fila);
@@ -72,6 +76,200 @@ void esperarX(const string& texto, Jugador& jugador, MapaNivel1& mapa) {
         int tecla = _getch();
         if (tecla == 'x' || tecla == 'X') break;
     }
+}
+
+
+// ==========================================================
+// CHARLA FINAL: TODO ESTO QUEDA LIBRE PARA QUE LO ESCRIBAS.
+// Cada opcion del jugador tiene una respuesta propia del personaje.
+// ==========================================================
+const string DIALOGO_1 = "   ";
+const string OPCION_1A = "   ";
+const string OPCION_1B = "   ";
+const string OPCION_1C = "   ";
+const string RESPUESTA_1A = "   ";
+const string RESPUESTA_1B = "   ";
+const string RESPUESTA_1C = "   ";
+
+const string DIALOGO_2 = "   ";
+const string OPCION_2A = "   ";
+const string OPCION_2B = "   ";
+const string OPCION_2C = "   ";
+const string RESPUESTA_2A = "   ";
+const string RESPUESTA_2B = "   ";
+const string RESPUESTA_2C = "   ";
+
+const string DIALOGO_3 = "   ";
+const string OPCION_3A = "   ";
+const string OPCION_3B = "   ";
+const string OPCION_3C = "   ";
+const string RESPUESTA_3A = "   ";
+const string RESPUESTA_3B = "   ";
+const string RESPUESTA_3C = "   ";
+
+void turnoDialogo(const string& frase, const string& a, const string& b, const string& c,
+                  const string& ra, const string& rb, const string& rc) {
+    limpiarPantalla();
+    cout << "=============================================\n";
+    cout << "                 CONVERSACION                \n";
+    cout << "=============================================\n\n";
+    cout << "        _=|=_\n";
+    cout << "         (|) \n";
+    cout << "         / \\\n\n";
+    cout << "Personaje: " << frase << "\n\n";
+    cout << "A) " << a << "\n";
+    cout << "B) " << b << "\n";
+    cout << "C) " << c << "\n\n";
+    cout << "Tu respuesta: ";
+
+    char e;
+    while (true) {
+        e = (char)_getch();
+        e = (char)toupper(e);
+        if (e == 'A' || e == 'B' || e == 'C') break;
+    }
+    cout << e << "\n\n";
+    cout << "Personaje: ";
+    if (e == 'A') cout << ra;
+    else if (e == 'B') cout << rb;
+    else cout << rc;
+    cout << "\n\nPresiona cualquier tecla para continuar...";
+    _getch();
+}
+
+void conversacionFinal() {
+    turnoDialogo(DIALOGO_1, OPCION_1A, OPCION_1B, OPCION_1C, RESPUESTA_1A, RESPUESTA_1B, RESPUESTA_1C);
+    turnoDialogo(DIALOGO_2, OPCION_2A, OPCION_2B, OPCION_2C, RESPUESTA_2A, RESPUESTA_2B, RESPUESTA_2C);
+    turnoDialogo(DIALOGO_3, OPCION_3A, OPCION_3B, OPCION_3C, RESPUESTA_3A, RESPUESTA_3B, RESPUESTA_3C);
+}
+
+
+// ==========================================================
+// NIVEL 2 - BOCETO FUNCIONAL
+// Misma base de movimiento del Nivel 1, pero SIN scroll continuo.
+// El escenario cambia por pantallas completas (partes).
+// Los enemigos y dialogos quedan como puntos de extension para
+// definirlos despues sin inventar contenido que aun no fue acordado.
+// ==========================================================
+void jugarNivel2Boceto() {
+    Jugador jugador(5, FILAS_FONDO);
+    MapaNivel2 mapa;
+    SegmentedCameraStrategy camera;
+    int ultimaDirHorizontal = 1;
+
+    if (!mapa.estaCargado()) {
+        limpiarPantalla();
+        cout << "ERROR: No se pudieron cargar las partes TXT del Nivel 2.\n";
+        cout << "Presiona cualquier tecla para volver al menu...";
+        _getch();
+        return;
+    }
+
+    limpiarPantalla();
+    cout << "=============================================\n";
+    cout << "             NIVEL 2 - BOCETO               \n";
+    cout << "=============================================\n\n";
+    cout << "Este nivel funciona POR PARTES.\n";
+    cout << "Al llegar al borde derecho se carga la siguiente pantalla.\n";
+    cout << "Al volver por el borde izquierdo regresas a la anterior.\n\n";
+    cout << "Enemigos, historia y arte final: pendientes de definir.\n\n";
+    cout << "Presiona cualquier tecla para comenzar...";
+    _getch();
+
+    bool terminado = false;
+    auto ultimoPaso = chrono::steady_clock::now();
+
+    while (!terminado) {
+        auto ahora = chrono::steady_clock::now();
+        bool puedeDarPaso = chrono::duration_cast<chrono::milliseconds>(ahora - ultimoPaso).count() >= 80;
+        bool derecha = false, izquierda = false, arriba = false, abajo = false;
+
+        if (_kbhit()) {
+            int tecla = _getch();
+            if (tecla == 0 || tecla == 224) {
+                tecla = _getch();
+                if (tecla == 77) derecha = true;
+                else if (tecla == 75) izquierda = true;
+                else if (tecla == 72) arriba = true;
+                else if (tecla == 80) abajo = true;
+            }
+            else {
+                if (tecla == 'd' || tecla == 'D') derecha = true;
+                else if (tecla == 'a' || tecla == 'A') izquierda = true;
+                else if (tecla == 'w' || tecla == 'W') arriba = true;
+                else if (tecla == 's' || tecla == 'S') abajo = true;
+                else if (tecla == 'x' || tecla == 'X') terminado = true;
+            }
+        }
+
+        if (puedeDarPaso && !terminado) {
+            bool seMovio = false;
+            int parteAntes = mapa.getParteActual();
+
+            if (derecha && !izquierda) {
+                ultimaDirHorizontal = 1;
+                camera.moverDerecha(jugador, mapa, ANCHO_PANTALLA, ALTO_TOTAL);
+                seMovio = true;
+
+                // En la ultima parte, alcanzar el borde termina SOLO este boceto.
+                if (mapa.esUltimaParte() && parteAntes == mapa.getParteActual() &&
+                    jugador.getX() >= ANCHO_PANTALLA - 6)
+                    terminado = true;
+            }
+            else if (izquierda && !derecha) {
+                ultimaDirHorizontal = -1;
+                camera.moverIzquierda(jugador, mapa, ANCHO_PANTALLA, ALTO_TOTAL);
+                seMovio = true;
+            }
+
+            if (arriba && !abajo) {
+                if (jugador.getY() - 3 >= FILAS_FONDO)
+                    jugador.mover(0, -1, ultimaDirHorizontal, ANCHO_PANTALLA, ALTO_TOTAL);
+                seMovio = true;
+            }
+            else if (abajo && !arriba) {
+                if (jugador.getY() + 3 < ALTO_TOTAL)
+                    jugador.mover(0, 1, ultimaDirHorizontal, ANCHO_PANTALLA, ALTO_TOTAL);
+                seMovio = true;
+            }
+
+            if (seMovio) ultimoPaso = ahora;
+        }
+
+        if (terminado) break;
+
+        limpiarPantalla();
+        cout << string(ANCHO_PANTALLA, '=') << "\n";
+        cout << " " << mapa.getNombreMapa()
+             << "   [" << mapa.getParteActual() + 1 << "/" << mapa.getCantidadPartes() << "]\n";
+        cout << string(ANCHO_PANTALLA, '=') << "\n";
+
+        for (int fila = 0; fila < ALTO_TOTAL; ++fila) {
+            string linea(ANCHO_PANTALLA, ' ');
+            for (int x = 0; x < ANCHO_PANTALLA; ++x)
+                linea[x] = mapa.getPixelFondo(x, fila);
+
+            string sj = jugador.getLineaSprite(fila);
+            for (size_t c = 0; c < sj.size(); ++c) {
+                int px = jugador.getX() + (int)c;
+                if (px >= 0 && px < ANCHO_PANTALLA) linea[px] = sj[c];
+            }
+            cout << "|" << linea << "|\n";
+        }
+
+        cout << string(ANCHO_PANTALLA, '=') << "\n";
+        cout << " Flechas/WASD: mover | X: salir del boceto | Al borde: cambia de PARTE\n";
+        Sleep(16);
+    }
+
+    limpiarPantalla();
+    cout << "=============================================\n";
+    cout << "       FIN DEL BOCETO FUNCIONAL NIVEL 2      \n";
+    cout << "=============================================\n\n";
+    cout << "La estructura por partes ya funciona.\n";
+    cout << "El contenido definitivo queda libre para completarlo despues.\n\n";
+    cout << "Presiona cualquier tecla para volver al menu...";
+    _getch();
 }
 
 int main() {
@@ -97,7 +295,15 @@ int main() {
         carros.push_back(Carro(ANCHO_PANTALLA + 30, FILAS_FONDO + 6, ANCHO_PANTALLA));
         EnemigoEspecial enemigoEsp(ANCHO_PANTALLA);
         MapaNivel1 mapa(ANCHO_PANTALLA);
+        if (!mapa.estaFondoCargado()) {
+            limpiarPantalla();
+            cout << "ERROR: No se pudo cargar assets/backgrounds/Fondo_de_ciudad_Nivel_1.txt\n";
+            cout << "Presiona cualquier tecla para volver al menu...";
+            _getch();
+            continue;
+        }
         GameManager manager;
+        ContinuousCameraStrategy camera;
         int ultimaDirHorizontal = 1;
 
         bool pausaMapa1Hecha = false;
@@ -129,17 +335,29 @@ int main() {
                     ahoraMovimiento - ultimoPaso
                 ).count() >= INTERVALO_MOVIMIENTO_MS;
 
-#ifdef _WIN32
-            bool derecha = (GetAsyncKeyState(VK_RIGHT) & 0x8000) != 0;
-            bool izquierda = (GetAsyncKeyState(VK_LEFT) & 0x8000) != 0;
-            bool arriba = (GetAsyncKeyState(VK_UP) & 0x8000) != 0;
-            bool abajo = (GetAsyncKeyState(VK_DOWN) & 0x8000) != 0;
-#else
             bool derecha = false;
             bool izquierda = false;
             bool arriba = false;
             bool abajo = false;
-#endif
+
+            // Teclado con _kbhit() y _getch().
+            // Flechas y WASD siguen funcionando.
+            if (_kbhit()) {
+                int tecla = _getch();
+                if (tecla == 0 || tecla == 224) {
+                    tecla = _getch();
+                    if (tecla == 77) derecha = true;
+                    else if (tecla == 75) izquierda = true;
+                    else if (tecla == 72) arriba = true;
+                    else if (tecla == 80) abajo = true;
+                }
+                else {
+                    if (tecla == 'd' || tecla == 'D') derecha = true;
+                    else if (tecla == 'a' || tecla == 'A') izquierda = true;
+                    else if (tecla == 'w' || tecla == 'W') arriba = true;
+                    else if (tecla == 's' || tecla == 'S') abajo = true;
+                }
+            }
 
             if (puedeDarPaso) {
                 bool seMovio = false;
@@ -147,27 +365,14 @@ int main() {
                 if (derecha && !izquierda) {
                     ultimaDirHorizontal = 1;
 
-                    // Primero el personaje avanza hasta la zona de camara.
-                    if (jugador.getX() < ZONA_CAMARA_X) {
-                        jugador.mover(2, 0, 1, ANCHO_PANTALLA, ALTO_TOTAL);
-                    }
-                    else {
-                        // Luego queda aproximadamente fijo y avanza el mundo.
-                        mapa.avanzar(2);
-                        jugador.mover(0, 0, 1, ANCHO_PANTALLA, ALTO_TOTAL);
-                    }
+                    // La estrategia de camara decide si avanza Bloom o el mundo.
+                    camera.moverDerecha(jugador, mapa, ZONA_CAMARA_X, ANCHO_PANTALLA, ALTO_TOTAL);
                     seMovio = true;
                 }
                 else if (izquierda && !derecha) {
                     ultimaDirHorizontal = -1;
 
-                    if (mapa.getPosicionMundo() > 0 && jugador.getX() >= ZONA_CAMARA_X) {
-                        mapa.retroceder(2);
-                        jugador.mover(0, 0, -1, ANCHO_PANTALLA, ALTO_TOTAL);
-                    }
-                    else if (jugador.getX() - 2 >= 0) {
-                        jugador.mover(-2, 0, -1, ANCHO_PANTALLA, ALTO_TOTAL);
-                    }
+                    camera.moverIzquierda(jugador, mapa, ZONA_CAMARA_X, ANCHO_PANTALLA, ALTO_TOTAL);
                     seMovio = true;
                 }
 
@@ -206,7 +411,12 @@ int main() {
             // FINAL DEL RECORRIDO NOCTURNO
             // =====================================================
             if (mapa.getPosicionMundo() >= 500) {
+                // Conserva el tercer texto de historia original.
                 esperarX(TEXTO_FIN_MAPA_3, jugador, mapa);
+
+                // Despues de haberlo visto acercarse en el mapa, empieza la charla.
+                conversacionFinal();
+
                 nivelCompletado = true;
                 break;
             }
@@ -254,6 +464,19 @@ int main() {
                     if (px >= 0 && px < ANCHO_PANTALLA) linea[px] = se[c];
                 }
 
+                // El personaje elegante aparece al final del camino y se acerca
+                // visualmente mientras la camara sigue avanzando.
+                if (mapa.getPosicionMundo() >= 440) {
+                    int npcX = 82 - (mapa.getPosicionMundo() - 440) / 2;
+                    if (npcX < 48) npcX = 48;
+                    PersonajeElegante personajeFinal(npcX, FILAS_FONDO + 3);
+                    string sp = personajeFinal.getLineaSprite(fila);
+                    for (size_t c = 0; c < sp.size(); c++) {
+                        int px = personajeFinal.getX() + (int)c;
+                        if (px >= 0 && px < ANCHO_PANTALLA) linea[px] = sp[c];
+                    }
+                }
+
                 cout << "|" << linea << "|\n";
             }
 
@@ -279,8 +502,15 @@ int main() {
             cout << "Te quedaste sin vidas.\n";
         }
 
-        cout << "\nPresiona cualquier tecla para volver al menu...";
-        _getch();
+        if (nivelCompletado) {
+            cout << "\nPresiona cualquier tecla para continuar al boceto del Nivel 2...";
+            _getch();
+            jugarNivel2Boceto();
+        }
+        else {
+            cout << "\nPresiona cualquier tecla para volver al menu...";
+            _getch();
+        }
     }
 
     return 0;

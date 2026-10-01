@@ -26,6 +26,7 @@ public:
     int getY() const { return y; }
     int getVidas() const { return vidas; }
     void perderVida() { vidas--; }
+    void colocar(int nuevaX, int nuevaY) { x = nuevaX; y = nuevaY; }
 
     void mover(int desplaceX, int desplaceY, int nuevaDireccion, int limiteX, int limiteY) {
         direccion = nuevaDireccion;
